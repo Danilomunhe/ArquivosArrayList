@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JTextField;
 import javax.swing.JTable;
@@ -25,15 +26,16 @@ public class FrameCadastro extends JFrame {
 	private JTextField txtCidade;
 
 	// Atributos referentes a criação/gravação de contatos
-	Contato contato = null;
-	DadosContatos objDadosContatos = null;
+	Contato objContato = null;
+	DadosContato objDadosContato = null;
 	Arquivo objArquivo = null;
+	String texto = "";
 
 	public FrameCadastro() {
 
-		Contato objContato = new Contato();
-		DadosContatos objDadosContatos = new DadosContatos();
-		Arquivo objArquivo = new Arquivo();
+		objContato = new Contato();
+		objDadosContato = new DadosContato();
+		objArquivo = new Arquivo();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 486, 412);
@@ -109,13 +111,34 @@ public class FrameCadastro extends JFrame {
 				objContato.setCidade(txtCidade.getText());
 
 				// Preparação doas dados para o arquivo txt
-				String texto = objContato.getNome() + "; " + objContato.getEmail() + "; " + objContato.getTelefone()
-						+ "; " + objContato.getCidade() + "\n";
+//				String texto = objContato.getNome() + "; " + objContato.getEmail() + "; " + objContato.getTelefone()
+//						+ "; " + objContato.getCidade() + "\n";
 
-				//Gravação dos dados no arquivo txt
+				// Gravação dos dados no arquivo txt
 				String caminho = "C:\\Users\\21276321\\Desktop\\Contato\\contatos.txt";
-				String textoCompleto = objArquivo.ler(caminho) + texto;
-				objArquivo.escrever(caminho, textoCompleto);
+
+				// Teste de leitura de arquivo txt
+				objDadosContato = objArquivo.ler(caminho);
+
+				// Gravação
+				objDadosContato.cadastrarContato(objContato);
+
+				// Leitura
+				ArrayList<Contato> contatos = objDadosContato.listarContatos();
+
+				contatos.forEach(contato -> {
+					// System.out.println("Nome: " + contato.getNome() + " E-mail: " +
+					// contato.getEmail() + " Telefone: " + contato.getTelefone() + " Cidade " +
+					// contato.getCidade());
+
+					texto += contato.getNome()+ "; "+ contato.getEmail() + "; "+ contato.getTelefone() + "; "+ contato.getCidade()
+							+ "\n";
+			
+				});
+				//System.out.println(texto);
+				objArquivo.escrever(caminho, texto);
+				contatos.clear();
+		
 			}
 		});
 	}

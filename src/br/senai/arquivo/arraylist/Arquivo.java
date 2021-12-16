@@ -8,6 +8,8 @@ import java.io.PrintWriter;
 
 public class Arquivo {
 
+	public DadosContato objDadosContato = new DadosContato();
+	
 	// Cria o arquivo caso ele não exista e grava dados em um arquivo
 	public boolean escrever(String caminho, String texto) {
 		try {
@@ -29,9 +31,8 @@ public class Arquivo {
 	}
 
 	// Ler um arquivo
-	public String ler(String caminho) {
+	public DadosContato ler(String caminho) {
 		
-		String conteudo = "";
 		
         try {
         	
@@ -46,16 +47,26 @@ public class Arquivo {
         	linha = lerArquivo.readLine();  
         	
         	while(linha != null) {
-        		conteudo += linha + "\n";
+        	
+        		String[] dadosLinha = linha.split(";");
+        		
+        		Contato objContato = new Contato();
+        		objContato.setNome(dadosLinha[0]);
+        		objContato.setEmail(dadosLinha[1]);
+        		objContato.setTelefone(dadosLinha[2]);
+        		objContato.setCidade(dadosLinha[3]);
+        		
+        		objDadosContato.cadastrarContato(objContato);
+        		
         		linha = lerArquivo.readLine();
         	}
         	arquivo.close();
-        	return conteudo;
+        	return objDadosContato;
         	
         }catch(IOException e) {
         	
         	System.out.println("ERRO: " + e.getMessage());
-        	return "";
+        	return null;
         }
 	}
 }
