@@ -33,8 +33,8 @@ public class FrameCadastro extends JFrame {
 
 	public FrameCadastro() {
 
-		objContato = new Contato();
-		objDadosContato = new DadosContato();
+		//objContato = new Contato();
+		//objDadosContato = new DadosContato();
 		objArquivo = new Arquivo();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -104,6 +104,8 @@ public class FrameCadastro extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
+				objContato = new Contato();
+				objDadosContato = new DadosContato();
 				// Caputura dos dados para o objeto contato
 				objContato.setNome(txtNome.getText());
 				objContato.setEmail(txtEmail.getText());
@@ -111,11 +113,12 @@ public class FrameCadastro extends JFrame {
 				objContato.setCidade(txtCidade.getText());
 
 				// Preparação doas dados para o arquivo txt
-//				String texto = objContato.getNome() + "; " + objContato.getEmail() + "; " + objContato.getTelefone()
-//						+ "; " + objContato.getCidade() + "\n";
+				// String texto = objContato.getNome() + "; " + objContato.getEmail() + "; " +
+				// objContato.getTelefone()
+				// + "; " + objContato.getCidade() + "\n";
 
 				// Gravação dos dados no arquivo txt
-				String caminho = "C:\\Users\\21276321\\Desktop\\Contato\\contatos.txt";
+				String caminho = "C:\\Users\\21276321.CFP127ALUNO\\Desktop\\contatos\\contato.txt";
 
 				// Teste de leitura de arquivo txt
 				objDadosContato = objArquivo.ler(caminho);
@@ -131,14 +134,17 @@ public class FrameCadastro extends JFrame {
 					// contato.getEmail() + " Telefone: " + contato.getTelefone() + " Cidade " +
 					// contato.getCidade());
 
-					texto += contato.getNome()+ "; "+ contato.getEmail() + "; "+ contato.getTelefone() + "; "+ contato.getCidade()
-							+ "\n";
-			
+					texto += contato.getNome() + "; " + contato.getEmail() + "; " + contato.getTelefone() + "; "
+							+ contato.getCidade() + "\n";
+
 				});
-				//System.out.println(texto);
+				System.out.println(texto);
 				objArquivo.escrever(caminho, texto);
 				contatos.clear();
-		
+				objContato = null;
+				objDadosContato = null;
+				texto = "";
+
 			}
 		});
 	}
